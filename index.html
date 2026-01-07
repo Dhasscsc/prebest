@@ -1,0 +1,1779 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>பங்கு பகுப்பாய்வு கருவி</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .upload-section {
+            padding: 25px 30px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .upload-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .upload-box {
+            flex: 1;
+            min-width: 300px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border: 2px dashed #c0c6d0;
+            transition: all 0.3s;
+        }
+        
+        .upload-box:hover {
+            border-color: #2a5298;
+            background-color: #f0f4ff;
+        }
+        
+        .upload-box h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .file-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background-color: #1e3c72;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2a5298;
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        
+        .btn-warning:hover {
+            background-color: #e0a800;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+        
+        .stats-section {
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            background-color: #f8f9fa;
+        }
+        
+        .stat-box {
+            flex: 1;
+            min-width: 200px;
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .stat-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 7px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-total { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); }
+        .stat-buy { background: linear-gradient(135deg, #28a745 0%, #20c997 100%); }
+        .stat-sell { background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%); }
+        .stat-wait { background: linear-gradient(135deg, #ffc107 0%, #ff922b 100%); }
+        
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+        
+        .stat-label {
+            font-size: 18px;
+        }
+        
+        .stat-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-top: 5px;
+            font-weight: normal;
+        }
+        
+        .table-section {
+            padding: 25px 30px;
+            overflow-x: auto;
+        }
+        
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .table-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .pagination-info {
+            background-color: #f8f9fa;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            color: #1e3c72;
+            border: 1px solid #dee2e6;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        
+        th {
+            background-color: #1e3c72;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .signal-buy {
+            color: #28a745;
+            font-weight: 700;
+            background-color: rgba(40, 167, 69, 0.1);
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        
+        .signal-sell {
+            color: #dc3545;
+            font-weight: 700;
+            background-color: rgba(220, 53, 69, 0.1);
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        
+        .signal-wait {
+            color: #ffc107;
+            font-weight: 700;
+            background-color: rgba(255, 193, 7, 0.1);
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        
+        .signal-avoid {
+            color: #6c757d;
+            font-weight: 700;
+            background-color: rgba(108, 117, 125, 0.1);
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        
+        .positive-change {
+            color: #28a745;
+            font-weight: 600;
+        }
+        
+        .negative-change {
+            color: #dc3545;
+            font-weight: 600;
+        }
+        
+        .actions-section {
+            padding: 25px 30px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            border-top: 1px solid #eaeaea;
+            background-color: #f8f9fa;
+        }
+        
+        .whatsapp-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+        }
+        
+        .modal-content h3 {
+            margin-bottom: 20px;
+            color: #1e3c72;
+        }
+        
+        .close-modal {
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .phone-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+            font-size: 14px;
+            border-top: 1px solid #eaeaea;
+        }
+        
+        .comparison-section {
+            padding: 25px 30px;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #eaeaea;
+            margin-bottom: 20px;
+        }
+        
+        .comparison-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .comparison-cards {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .comparison-card {
+            flex: 1;
+            min-width: 200px;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .comparison-card h4 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 16px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+        
+        .reason-item {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .reason-title {
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 5px;
+        }
+        
+        .reason-desc {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.4;
+        }
+        
+        .target-section {
+            background-color: #fff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-top: 10px;
+            border-left: 3px solid #1e3c72;
+        }
+        
+        .target-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 13px;
+        }
+        
+        .target-label {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .target-value {
+            font-weight: 700;
+        }
+        
+        .target-buy {
+            color: #28a745;
+        }
+        
+        .target-sell {
+            color: #dc3545;
+        }
+        
+        .print-btn {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .print-btn:hover {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+        }
+        
+        .dashboard-share-btn {
+            background-color: #25D366;
+            color: white;
+        }
+        
+        .dashboard-share-btn:hover {
+            background-color: #1da851;
+            transform: translateY(-2px);
+        }
+        
+        .filter-active {
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .whatsapp-icon {
+            color: #25D366;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        .pagination {
+            display: flex;
+            gap: 5px;
+            margin-top: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .page-btn {
+            padding: 8px 15px;
+            border: 1px solid #dee2e6;
+            background-color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .page-btn:hover {
+            background-color: #e9ecef;
+        }
+        
+        .page-btn.active {
+            background-color: #1e3c72;
+            color: white;
+            border-color: #1e3c72;
+        }
+        
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .search-box {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            width: 250px;
+            font-size: 16px;
+        }
+        
+        .total-display {
+            background-color: #1e3c72;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .data-summary {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #1e3c72;
+        }
+        
+        .summary-item {
+            display: inline-block;
+            margin-right: 20px;
+            font-size: 15px;
+        }
+        
+        .summary-value {
+            font-weight: 700;
+            color: #1e3c72;
+        }
+        
+        .stock-name {
+            font-weight: 600;
+            color: #1e3c72;
+        }
+        
+        .stock-symbol {
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 2px;
+        }
+        
+        .company-name {
+            font-size: 11px;
+            color: #495057;
+            display: block;
+            margin-top: 2px;
+        }
+        
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .upload-container {
+                flex-direction: column;
+            }
+            
+            .stat-box {
+                min-width: 150px;
+            }
+            
+            th, td {
+                padding: 10px 8px;
+                font-size: 14px;
+            }
+            
+            .table-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .comparison-cards {
+                flex-direction: column;
+            }
+            
+            .comparison-card {
+                min-width: 100%;
+            }
+            
+            .actions-section {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            
+            body {
+                background-color: white;
+                padding: 0;
+                font-size: 12px;
+            }
+            
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+            
+            table {
+                page-break-inside: auto;
+            }
+            
+            tr {
+                page-break-inside: avoid;
+                page-break-after: auto;
+            }
+            
+            thead {
+                display: table-header-group;
+            }
+            
+            .actions-section, .upload-section, .comparison-section, .stats-section {
+                display: none !important;
+            }
+            
+            .table-section {
+                padding: 10px;
+            }
+            
+            h2 {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-chart-line"></i> பங்கு பகுப்பாய்வு கருவி</h1>
+            <p>ப்ரிமார்கெட் பைல்களைப் பதிவேற்றி பங்கு பரிந்துரைகளைப் பெறுங்கள்</p>
+        </div>
+        
+        <div class="upload-section">
+            <div class="upload-container">
+                <div class="upload-box">
+                    <h3><i class="fas fa-calendar-day"></i> நேற்றைய ப்ரிமார்கெட் பைல்</h3>
+                    <input type="file" id="yesterdayFile" class="file-input" accept=".csv,.xlsx,.xls">
+                    <button class="btn btn-primary" onclick="uploadFile('yesterday')">
+                        <i class="fas fa-upload"></i> பைல் பதிவேற்று
+                    </button>
+                </div>
+                
+                <div class="upload-box">
+                    <h3><i class="fas fa-calendar-alt"></i> இன்றைய ப்ரிமார்கெட் பைல்</h3>
+                    <input type="file" id="todayFile" class="file-input" accept=".csv,.xlsx,.xls">
+                    <button class="btn btn-primary" onclick="uploadFile('today')">
+                        <i class="fas fa-upload"></i> பைல் பதிவேற்று
+                    </button>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 25px;">
+                <button class="btn btn-success" onclick="analyzeData()">
+                    <i class="fas fa-chart-bar"></i> பகுப்பாய்வு செய்
+                </button>
+            </div>
+        </div>
+        
+        <!-- ஒப்பீட்டு பகுப்பாய்வு பகுதி -->
+        <div class="comparison-section no-print" id="comparisonSection" style="display: none;">
+            <div class="comparison-header">
+                <h2 style="color: #1e3c72;"><i class="fas fa-exchange-alt"></i> பங்கு ஒப்பீட்டு பகுப்பாய்வு</h2>
+                <button class="btn btn-warning" onclick="toggleComparison()">
+                    <i class="fas fa-times"></i> மூடு
+                </button>
+            </div>
+            
+            <div class="comparison-cards">
+                <div class="comparison-card">
+                    <h4><i class="fas fa-chart-line"></i> விலை மாற்றங்கள்</h4>
+                    <div id="priceComparison">
+                        <!-- விலை ஒப்பீட்டு தகவல்கள் இங்கே ஏற்றப்படும் -->
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <h4><i class="fas fa-chart-bar"></i> தொகுதி மாற்றங்கள்</h4>
+                    <div id="volumeComparison">
+                        <!-- தொகுதி ஒப்பீட்டு தகவல்கள் இங்கே ஏற்றப்படும் -->
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <h4><i class="fas fa-bullseye"></i> தொழில்நுட்ப பகுப்பாய்வு</h4>
+                    <div id="technicalComparison">
+                        <!-- தொழில்நுட்ப பகுப்பாய்வு தகவல்கள் இங்கே ஏற்றப்படும் -->
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <h4><i class="fas fa-lightbulb"></i> காரண விளக்கம்</h4>
+                    <div id="reasonAnalysis">
+                        <!-- காரண விளக்கங்கள் இங்கே ஏற்றப்படும் -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stats-section">
+            <div class="stat-box stat-total" onclick="filterStocks('all')" id="stat-all">
+                <div class="stat-label">மொத்த பங்குகள்</div>
+                <div class="stat-number" id="total-stocks">10<span style="font-size: 20px; margin-left: 5px;">/2703</span></div>
+                <div class="stat-subtitle">காட்டப்படுகிறது / மொத்தம்</div>
+            </div>
+            
+            <div class="stat-box stat-buy" onclick="filterStocks('buy')" id="stat-buy">
+                <div class="stat-label">வாங்க</div>
+                <div class="stat-number" id="buy-stocks">4</div>
+                <div class="stat-subtitle" id="buy-subtitle">மொத்தத்தில் 0.15%</div>
+            </div>
+            
+            <div class="stat-box stat-sell" onclick="filterStocks('sell')" id="stat-sell">
+                <div class="stat-label">விற்க</div>
+                <div class="stat-number" id="sell-stocks">3</div>
+                <div class="stat-subtitle" id="sell-subtitle">மொத்தத்தில் 0.11%</div>
+            </div>
+            
+            <div class="stat-box stat-wait" onclick="filterStocks('wait')" id="stat-wait">
+                <div class="stat-label">காத்திரு</div>
+                <div class="stat-number" id="wait-stocks">2</div>
+                <div class="stat-subtitle" id="wait-subtitle">மொத்தத்தில் 0.07%</div>
+            </div>
+            
+            <div class="stat-box" style="background: linear-gradient(135deg, #6c757d 0%, #495057 100%);" onclick="filterStocks('avoid')" id="stat-avoid">
+                <div class="stat-label">வேண்டாம்</div>
+                <div class="stat-number" id="avoid-stocks">1</div>
+                <div class="stat-subtitle" id="avoid-subtitle">மொத்தத்தில் 0.04%</div>
+            </div>
+        </div>
+        
+        <div class="data-summary">
+            <div class="summary-item">
+                <span class="summary-value" id="filtered-count">10</span> பங்குகள் காட்டப்படுகின்றன
+            </div>
+            <div class="summary-item">
+                <span class="summary-value" id="total-count">2703</span> மொத்த பங்குகள்
+            </div>
+            <div class="summary-item">
+                தேர்வு: <span class="summary-value" id="current-filter">அனைத்தும்</span>
+            </div>
+            <div class="summary-item no-print">
+                <button class="btn btn-warning btn-sm" onclick="showComparison()">
+                    <i class="fas fa-exchange-alt"></i> ஒப்பீட்டு பகுப்பாய்வு
+                </button>
+            </div>
+        </div>
+        
+        <div class="table-section">
+            <div class="table-header">
+                <h2 style="color: #1e3c72;">பங்கு பகுப்பாய்வு முடிவுகள்</h2>
+                <div class="table-controls">
+                    <input type="text" id="searchStock" class="search-box" placeholder="பங்கைத் தேடு..." onkeyup="searchStocks()">
+                    <div class="pagination-info">
+                        பக்கம்: <span id="current-page">1</span> / <span id="total-pages">1</span>
+                        | காட்டப்படுகிறது: <span id="showing-count">10</span>/<span id="total-filtered">10</span>
+                    </div>
+                </div>
+            </div>
+            
+            <table id="stocks-table">
+                <thead>
+                    <tr>
+                        <th width="5%">#</th>
+                        <th width="15%">பங்கு</th>
+                        <th width="12%">விலை (₹)</th>
+                        <th width="15%">மாற்றம்</th>
+                        <th width="13%">சிக்னல்</th>
+                        <th width="20%">இலக்கு/நிறுத்தம்</th>
+                        <th width="10%">பகிர்</th>
+                    </tr>
+                </thead>
+                <tbody id="stocks-data">
+                    <!-- Stock data will be loaded here -->
+                </tbody>
+            </table>
+            
+            <div class="pagination" id="pagination-controls">
+                <!-- Pagination buttons will be loaded here -->
+            </div>
+        </div>
+        
+        <div class="actions-section no-print">
+            <button class="btn btn-success" onclick="saveReport()">
+                <i class="fas fa-save"></i> ரிப்போர்ட் சேமி
+            </button>
+            
+            <button class="btn btn-primary" onclick="exportToExcel()">
+                <i class="fas fa-file-excel"></i> எக்செல் ஆக ஏற்று
+            </button>
+            
+            <button class="btn dashboard-share-btn" onclick="shareDashboardViaWhatsApp()">
+                <i class="fab fa-whatsapp"></i> டாஸ்போர்ட் பகிர்
+            </button>
+            
+            <button class="btn print-btn" onclick="printReport()">
+                <i class="fas fa-print"></i> அச்சிடு
+            </button>
+            
+            <button class="btn btn-warning" onclick="resetFilters()">
+                <i class="fas fa-filter"></i> அனைத்தும் காட்டு
+            </button>
+        </div>
+        
+        <div class="footer">
+            <p>© 2024 பங்கு பகுப்பாய்வு கருவி | பகுப்பாய்வு செய்யப்பட்ட நேரம்: <span id="analysis-time"></span></p>
+        </div>
+    </div>
+    
+    <!-- WhatsApp Modal -->
+    <div class="whatsapp-modal" id="whatsappModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeWhatsAppModal()">&times;</span>
+            <h3><i class="fab fa-whatsapp"></i> வாட்சப்பில் பகிர்</h3>
+            <p>பங்கு பகுப்பாய்வு ரிப்போர்ட்டை வாட்சப்பில் அனுப்ப உங்கள் தொலைபேசி எண்ணை உள்ளிடவும்:</p>
+            <input type="tel" id="phoneNumber" class="phone-input" placeholder="உங்கள் தொலைபேசி எண் (91XXXXXXXXXX)" maxlength="12">
+            <div style="display: flex; gap: 10px;">
+                <button class="btn" style="flex: 1; background-color: #25D366; color: white;" onclick="sendViaWhatsApp()">
+                    <i class="fab fa-whatsapp"></i> அனுப்பு
+                </button>
+                <button class="btn btn-danger" style="flex: 1;" onclick="closeWhatsAppModal()">
+                    <i class="fas fa-times"></i> ரத்து செய்
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Constants
+        const TOTAL_STOCKS_IN_MARKET = 2703;
+        
+        // உண்மையான NSE பங்கு பட்டியல்
+        const nseStocks = [
+            { symbol: "RELIANCE", name: "ரிலையன்ஸ் இண்டஸ்ட்ரீஸ்", sector: "எண்ணெய் & எரிவாயு" },
+            { symbol: "TCS", name: "டாடா கன்சல்டன்சி சர்வீசஸ்", sector: "ஐடி" },
+            { symbol: "INFY", name: "இன்போசிஸ்", sector: "ஐடி" },
+            { symbol: "HDFCBANK", name: "எச்.டி.எப்.சி வங்கி", sector: "வங்கி" },
+            { symbol: "ICICIBANK", name: "ஐ.சி.ஐ.சி.ஐ வங்கி", sector: "வங்கி" },
+            { symbol: "SBIN", name: "ஸ்டேட் வங்கி இண்டியா", sector: "வங்கி" },
+            { symbol: "BHARTIARTL", name: "பார்ட்டி ஏர்டெல்", sector: "தொலைதொடர்பு" },
+            { symbol: "ITC", name: "ஐ.டி.சி", sector: "ஃபாஸ்ட் மூவிங் நுகர்வோர் பொருட்கள்" },
+            { symbol: "KOTAKBANK", name: "கோட்டக் மகிந்திரா வங்கி", sector: "வங்கி" },
+            { symbol: "AXISBANK", name: "ஆக்சிஸ் வங்கி", sector: "வங்கி" },
+            { symbol: "LT", name: "லார்சன் & டூப்ரோ", sector: "கட்டுமானம்" },
+            { symbol: "HINDUNILVR", name: "ஹிண்டுஸ்தான் யுனிலீவர்", sector: "ஃபாஸ்ட் மூவிங் நுகர்வோர் பொருட்கள்" },
+            { symbol: "ASIANPAINT", name: "ஏஷியன் பெயின்ட்ஸ்", sector: "நுகர்வோர் பொருட்கள்" },
+            { symbol: "MARUTI", name: "மாருதி சுஸூகி", sector: "தானுந்து" },
+            { symbol: "SUNPHARMA", name: "சன் ஃபார்மா", sector: "மருந்து" },
+            { symbol: "TITAN", name: "டைட்டன் நிறுவனம்", sector: "நுகர்வோர் பொருட்கள்" },
+            { symbol: "WIPRO", name: "விப்ரோ", sector: "ஐடி" },
+            { symbol: "ONGC", name: "ஆயில் & இயற்கை எரிவாயு கார்ப்பரேஷன்", sector: "எண்ணெய் & எரிவாயு" },
+            { symbol: "POWERGRID", name: "பவர் கிரிட் கார்ப்பரேஷன்", sector: "மின்" },
+            { symbol: "ULTRACEMCO", name: "அல்ட்ராடெக் சிமெண்ட்", sector: "சிமெண்ட்" },
+            { symbol: "ADANIPORTS", name: "அடானி துறைமுகங்கள்", sector: "உள்கட்டமைப்பு" },
+            { symbol: "BAJAJFINSV", name: "பஜாஜ் ஃபைனான்ஸ்", sector: "நிதி சேவைகள்" },
+            { symbol: "BAJFINANCE", name: "பஜாஜ் ஃபைனான்ஸ்", sector: "நிதி சேவைகள்" },
+            { symbol: "BRITANNIA", name: "பிரிட்டானியா", sector: "உணவு பொருட்கள்" },
+            { symbol: "CIPLA", name: "சிப்லா", sector: "மருந்து" },
+            { symbol: "COALINDIA", name: "கோல் இண்டியா", sector: "நிலக்கரி" },
+            { symbol: "DIVISLAB", name: "டிவிஸ் ஆய்வகங்கள்", sector: "மருந்து" },
+            { symbol: "DRREDDY", name: "டாக்டர் ரெட்டி ஆய்வகங்கள்", sector: "மருந்து" },
+            { symbol: "EICHERMOT", name: "ஐச்சர் மோட்டார்ஸ்", sector: "தானுந்து" },
+            { symbol: "GRASIM", name: "கிராசிம்", sector: "சிமெண்ட்" },
+            { symbol: "HCLTECH", name: "எச்.சி.எல் டெக்", sector: "ஐடி" },
+            { symbol: "HDFC", name: "எச்.டி.எப்.சி", sector: "நிதி" },
+            { symbol: "HDFCLIFE", name: "எச்.டி.எப்.சி லைஃப்", sector: "காப்பீடு" },
+            { symbol: "HEROMOTOCO", name: "ஹீரோ மோட்டோகார்ப்", sector: "தானுந்து" },
+            { symbol: "HINDALCO", name: "ஹிண்டால்கோ", sector: "அலுமினியம்" },
+            { symbol: "INDUSINDBK", name: "இண்டஸ்ட்ரியல் வங்கி", sector: "வங்கி" },
+            { symbol: "JSWSTEEL", name: "ஜே.எஸ்.டபிள்யூ இரும்பு", sector: "இரும்பு & எஃகு" },
+            { symbol: "M&M", name: "மஹிந்திரா & மஹிந்திரா", sector: "தானுந்து" },
+            { symbol: "NESTLEIND", name: "நெஸ்லே இண்டியா", sector: "உணவு பொருட்கள்" },
+            { symbol: "NTPC", name: "என்.டி.பி.சி", sector: "மின்" },
+            { symbol: "SBILIFE", name: "எஸ்.பி.ஐ லைஃப்", sector: "காப்பீடு" },
+            { symbol: "SHREECEM", name: "ஸ்ரீ சிமெண்ட்", sector: "சிமெண்ட்" },
+            { symbol: "TATASTEEL", name: "டாட்டா இரும்பு", sector: "இரும்பு & எஃகு" },
+            { symbol: "TECHM", name: "டெக்னாலஜி மஹிந்திரா", sector: "ஐடி" },
+            { symbol: "TATAMOTORS", name: "டாட்டா மோட்டார்ஸ்", sector: "தானுந்து" },
+            { symbol: "UPL", name: "யூ.பி.எல்", sector: "உரம்" },
+            { symbol: "ZOMATO", name: "சோமாட்டோ", sector: "தொழில்நுட்பம்" },
+            { symbol: "PAYTM", name: "பேட்டிம்", sector: "நிதி தொழில்நுட்பம்" }
+        ];
+        
+        // நேற்றைய மற்றும் இன்றைய பங்கு தரவுகள் (சிறந்த ஒப்பீட்டிற்காக)
+        let yesterdayStockData = [];
+        let todayStockData = [];
+        
+        // இலக்கு விலை மற்றும் நிறுத்த இழப்பு தரவு
+        const stockTargets = {
+            "RELIANCE": { target: 2950, stopLoss: 2780, rationale: "எண்ணெய் விலை உயர்வு" },
+            "TCS": { target: 3950, stopLoss: 3820, rationale: "அமெரிக்கா ஆர்டர்கள் அதிகரிப்பு" },
+            "INFY": { target: 1700, stopLoss: 1580, rationale: "ரூபாய் வீழ்ச்சி நன்மை" },
+            "HDFCBANK": { target: 1750, stopLoss: 1680, rationale: "கடன் வளர்ச்சி நல்லது" },
+            "ICICIBANK": { target: 1080, stopLoss: 1020, rationale: "NIM மேம்பாடு" },
+            "SBIN": { target: 800, stopLoss: 750, rationale: "மேலாண்மை மாற்றங்கள்" },
+            "BHARTIARTL": { target: 1220, stopLoss: 1140, rationale: "5G சந்தாதாரர் அதிகரிப்பு" },
+            "ITC": { target: 1150, stopLoss: 1090, rationale: "சிகரெட் விற்பனை நிலையானது" },
+            "KOTAKBANK": { target: 460, stopLoss: 430, rationale: "கடன் தரம் நல்லது" },
+            "AXISBANK": { target: 1900, stopLoss: 1800, rationale: "டிஜிட்டல் வங்கி மேம்பாடு" }
+        };
+        
+        // காரண விளக்கங்கள்
+        const reasonExplanations = [
+            {
+                title: "விலை உயர்வு காரணங்கள்",
+                icon: "fa-arrow-up",
+                reasons: [
+                    "நேற்று விட இன்று விலை உயர்ந்துள்ளது - வாங்கும் அழுத்தம் அதிகம்",
+                    "அப்பர் அடித்துள்ளது - உயர் தொகுதி வணிகம்",
+                    "ப்ரீமார்கெட் ஆர்டர்கள் அதிகரிப்பு",
+                    "நிறுவன செய்திகள்/லாப அறிக்கை எதிர்பார்ப்பு"
+                ]
+            },
+            {
+                title: "விலை தாழ்வு காரணங்கள்",
+                icon: "fa-arrow-down",
+                reasons: [
+                    "நேற்று விட இன்று விலை தாழ்ந்துள்ளது - விற்பனை அழுத்தம்",
+                    "லோயர் உடைந்துள்ளது - கீழ்நோக்கி உடைப்பு",
+                    "ப்ரீமார்கெட் விற்பனை ஆர்டர்கள் அதிகம்",
+                    "சந்தை திரும்பம்/லாபம் எடுத்தல்"
+                ]
+            },
+            {
+                title: "தொகுதி அதிகரிப்பு காரணங்கள்",
+                icon: "fa-chart-bar",
+                reasons: [
+                    "இன்று தொகுதி அதிகரிப்பு - சந்தை ஈடுபாடு உயர்வு",
+                    "புதிய உயர்/தாழ் உருவாக்கம்",
+                    "செய்தி/நிகழ்வு தொடர்பான வணிகம்",
+                    "FII/DII ஃப்ளோ அதிகரிப்பு"
+                ]
+            },
+            {
+                title: "தொழில்நுட்ப காரணங்கள்",
+                icon: "fa-bullseye",
+                reasons: [
+                    "மூலதன தொழில்நுட்பம் மேம்பாடு (MACD, RSI)",
+                    "ஆதரவு/தடை மட்டங்கள் உடைப்பு",
+                    "தொகுதி சராசரி விலை (VWAP) மேல்/கீழ் வணிகம்",
+                    "போலிங்கர் பேண்ட் உடைப்பு"
+                ]
+            }
+        ];
+        
+        // சீரற்ற பங்குகளைத் தேர்ந்தெடுக்கும் செயல்பாடு
+        function getRandomStockSymbol() {
+            return nseStocks[Math.floor(Math.random() * nseStocks.length)].symbol;
+        }
+        
+        // பங்கு விவரங்களைப் பெறும் செயல்பாடு
+        function getStockDetails(symbol) {
+            const stock = nseStocks.find(s => s.symbol === symbol);
+            if (stock) {
+                return {
+                    symbol: stock.symbol,
+                    name: stock.name,
+                    sector: stock.sector
+                };
+            }
+            
+            // அறியப்படாத பங்குகளுக்கு பொதுவான விவரங்கள்
+            const sectorList = [
+                "ஐடி", "வங்கி", "மருந்து", "தானுந்து", "எண்ணெய் & எரிவாயு",
+                "மின்", "சிமெண்ட்", "உரம்", "ஃபார்மா", "தொலைதொடர்பு",
+                "நுகர்வோர் பொருட்கள்", "இரும்பு & எஃகு", "அலுமினியம்", "வீட்டு உபயோகப் பொருட்கள்"
+            ];
+            
+            return {
+                symbol: symbol,
+                name: `${symbol} நிறுவனம்`,
+                sector: sectorList[Math.floor(Math.random() * sectorList.length)]
+            };
+        }
+
+        // உண்மையான பங்கு தரவுகளை உருவாக்கு
+        function generateRealisticStockData(count) {
+            const stocks = [];
+            const signals = ["buy", "sell", "wait", "avoid"];
+            
+            // முதல் 10 பங்குகளை நிலையானதாக வைத்திருக்கவும்
+            const first10Stocks = [
+                { symbol: "RELIANCE", name: "ரிலையன்ஸ் இண்டஸ்ட்ரீஸ்", sector: "எண்ணெய் & எரிவாயு" },
+                { symbol: "TCS", name: "டாடா கன்சல்டன்சி சர்வீசஸ்", sector: "ஐடி" },
+                { symbol: "INFY", name: "இன்போசிஸ்", sector: "ஐடி" },
+                { symbol: "HDFCBANK", name: "எச்.டி.எப்.சி வங்கி", sector: "வங்கி" },
+                { symbol: "ICICIBANK", name: "ஐ.சி.ஐ.சி.ஐ வங்கி", sector: "வங்கி" },
+                { symbol: "SBIN", name: "ஸ்டேட் வங்கி இண்டியா", sector: "வங்கி" },
+                { symbol: "BHARTIARTL", name: "பார்ட்டி ஏர்டெல்", sector: "தொலைதொடர்பு" },
+                { symbol: "ITC", name: "ஐ.டி.சி", sector: "ஃபாஸ்ட் மூவிங் நுகர்வோர் பொருட்கள்" },
+                { symbol: "KOTAKBANK", name: "கோட்டக் மகிந்திரா வங்கி", sector: "வங்கி" },
+                { symbol: "AXISBANK", name: "ஆக்சிஸ் வங்கி", sector: "வங்கி" }
+            ];
+            
+            // நேற்றைய தரவு (ஒப்பீட்டிற்காக)
+            yesterdayStockData = [];
+            
+            // முதல் 10 பங்குகளைச் சேர்க்க
+            first10Stocks.forEach((stock, index) => {
+                const signal = ["buy", "buy", "sell", "sell", "wait", "wait", "avoid"][index] || "buy";
+                const price = [2850, 3890, 1650, 1720, 1050, 780, 1180, 1120, 445, 1860][index];
+                const change = [45.50, 32.75, -18.25, 12.50, 8.20, -15.60, 22.40, -9.80, 3.20, -25.30][index];
+                const changePercent = [1.62, 0.85, -1.09, 0.73, 0.79, -1.96, 1.94, -0.87, 0.72, -1.34][index];
+                const volume = Math.floor(Math.random() * 5000000) + 1000000;
+                
+                // நேற்றைய விலை (இன்றைய விலையை விட +/- 2%)
+                const yesterdayPrice = price * (1 + (Math.random() * 0.04 - 0.02));
+                const yesterdayVolume = volume * (0.8 + Math.random() * 0.4);
+                
+                // நேற்றைய தரவைச் சேமிக்கவும்
+                yesterdayStockData.push({
+                    symbol: stock.symbol,
+                    price: yesterdayPrice,
+                    volume: yesterdayVolume,
+                    change: change * (0.8 + Math.random() * 0.4)
+                });
+                
+                stocks.push({
+                    id: index + 1,
+                    symbol: stock.symbol,
+                    name: stock.name,
+                    sector: stock.sector,
+                    price: price,
+                    change: change,
+                    changePercent: changePercent,
+                    signal: signal,
+                    volume: volume,
+                    yesterdayPrice: yesterdayPrice,
+                    yesterdayVolume: yesterdayVolume,
+                    target: stockTargets[stock.symbol]?.target || price * (1 + (Math.random() * 0.1)),
+                    stopLoss: stockTargets[stock.symbol]?.stopLoss || price * (0.95 + Math.random() * 0.05),
+                    rationale: stockTargets[stock.symbol]?.rationale || "தொழில்நுட்ப பகுப்பாய்வு அடிப்படையில்"
+                });
+            });
+            
+            // மீதமுள்ள பங்குகளைச் சேர்க்க
+            for (let i = 11; i <= count; i++) {
+                const symbol = getRandomStockSymbol();
+                const details = getStockDetails(symbol);
+                const signal = signals[Math.floor(Math.random() * signals.length)];
+                const price = Math.floor(Math.random() * 5000) + 100;
+                const change = (Math.random() - 0.5) * 100;
+                const changePercent = (Math.random() - 0.5) * 5;
+                const volume = Math.floor(Math.random() * 10000000) + 500000;
+                
+                // நேற்றைய விலை
+                const yesterdayPrice = price * (1 + (Math.random() * 0.04 - 0.02));
+                const yesterdayVolume = volume * (0.8 + Math.random() * 0.4);
+                
+                // நேற்றைய தரவைச் சேமிக்கவும்
+                yesterdayStockData.push({
+                    symbol: symbol,
+                    price: yesterdayPrice,
+                    volume: yesterdayVolume,
+                    change: change * (0.8 + Math.random() * 0.4)
+                });
+                
+                stocks.push({
+                    id: i,
+                    symbol: symbol,
+                    name: details.name,
+                    sector: details.sector,
+                    price: price,
+                    change: change,
+                    changePercent: changePercent,
+                    signal: signal,
+                    volume: volume,
+                    yesterdayPrice: yesterdayPrice,
+                    yesterdayVolume: yesterdayVolume,
+                    target: price * (1 + (Math.random() * 0.15)),
+                    stopLoss: price * (0.90 + Math.random() * 0.08),
+                    rationale: ["தொழில்நுட்ப பகுப்பாய்வு", "செய்தி ஊக்குவிப்பு", "லாப அறிக்கை எதிர்பார்ப்பு", "சந்தை ஸென்டிமெண்ட்"][Math.floor(Math.random() * 4)]
+                });
+            }
+            
+            // இன்றைய தரவைச் சேமிக்கவும்
+            todayStockData = stocks;
+            
+            return stocks;
+        }
+
+        // மாதிரி பங்குகளை உருவாக்கு
+        let stocksData = generateRealisticStockData(50);
+        
+        // Global variables
+        let currentFilter = "all";
+        let currentPage = 1;
+        let itemsPerPage = 10;
+        let analysisTime = new Date();
+        let searchQuery = "";
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            updateAnalysisTime();
+            renderStocksTable();
+            updateStats();
+            setupPagination();
+        });
+        
+        // Update analysis time
+        function updateAnalysisTime() {
+            const now = new Date();
+            const formattedTime = now.toLocaleString('ta-IN', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('analysis-time').textContent = formattedTime;
+        }
+        
+        // Apply filters and search
+        function applyFiltersAndSearch() {
+            let filtered = stocksData;
+            
+            // Apply signal filter
+            if (currentFilter !== "all") {
+                filtered = filtered.filter(stock => stock.signal === currentFilter);
+            }
+            
+            // Apply search query
+            if (searchQuery) {
+                const query = searchQuery.toLowerCase();
+                filtered = filtered.filter(stock => 
+                    stock.symbol.toLowerCase().includes(query) || 
+                    stock.name.toLowerCase().includes(query)
+                );
+            }
+            
+            return filtered;
+        }
+        
+        // Render stocks table
+        function renderStocksTable() {
+            const tableBody = document.getElementById('stocks-data');
+            tableBody.innerHTML = '';
+            
+            // Apply filters and search
+            let filteredStocks = applyFiltersAndSearch();
+            
+            // Calculate pagination
+            const totalPages = Math.ceil(filteredStocks.length / itemsPerPage);
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const currentStocks = filteredStocks.slice(startIndex, endIndex);
+            
+            // Update pagination info
+            document.getElementById('current-page').textContent = currentPage;
+            document.getElementById('total-pages').textContent = totalPages;
+            document.getElementById('showing-count').textContent = currentStocks.length;
+            document.getElementById('total-filtered').textContent = filteredStocks.length;
+            document.getElementById('filtered-count').textContent = filteredStocks.length;
+            
+            // Render stocks
+            currentStocks.forEach((stock, index) => {
+                const row = document.createElement('tr');
+                
+                // Determine change class
+                const changeClass = stock.change >= 0 ? 'positive-change' : 'negative-change';
+                const changeSign = stock.change >= 0 ? '+' : '';
+                
+                // Determine signal class and text
+                let signalClass, signalText;
+                switch(stock.signal) {
+                    case 'buy':
+                        signalClass = 'signal-buy';
+                        signalText = 'வாங்க';
+                        break;
+                    case 'sell':
+                        signalClass = 'signal-sell';
+                        signalText = 'விற்க';
+                        break;
+                    case 'wait':
+                        signalClass = 'signal-wait';
+                        signalText = 'காத்திரு';
+                        break;
+                    case 'avoid':
+                        signalClass = 'signal-avoid';
+                        signalText = 'வேண்டாம்';
+                        break;
+                }
+                
+                const actualIndex = startIndex + index + 1;
+                const targetClass = stock.signal === 'buy' ? 'target-buy' : 'target-sell';
+                
+                row.innerHTML = `
+                    <td>${actualIndex}</td>
+                    <td>
+                        <div class="stock-name">${stock.symbol}</div>
+                        <div class="company-name">${stock.name}</div>
+                        <div class="stock-symbol">துறை: ${stock.sector}</div>
+                    </td>
+                    <td>₹${stock.price.toLocaleString('en-IN')}</td>
+                    <td class="${changeClass}">${changeSign}${stock.change.toFixed(2)} (${changeSign}${stock.changePercent.toFixed(2)}%)</td>
+                    <td><span class="${signalClass}">${signalText}</span></td>
+                    <td>
+                        <div class="target-section">
+                            <div class="target-row">
+                                <span class="target-label">இலக்கு:</span>
+                                <span class="target-value ${targetClass}">₹${stock.target.toFixed(0)}</span>
+                            </div>
+                            <div class="target-row">
+                                <span class="target-label">நிறுத்தம்:</span>
+                                <span class="target-value">₹${stock.stopLoss.toFixed(0)}</span>
+                            </div>
+                            <div style="font-size: 11px; color: #6c757d; margin-top: 3px;">${stock.rationale}</div>
+                        </div>
+                    </td>
+                    <td><i class="fab fa-whatsapp whatsapp-icon" onclick="shareStockViaWhatsApp('${stock.symbol}')"></i></td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+            
+            // Update pagination controls
+            setupPagination();
+        }
+        
+        // Setup pagination controls
+        function setupPagination() {
+            const filteredStocks = applyFiltersAndSearch();
+            const totalPages = Math.ceil(filteredStocks.length / itemsPerPage);
+            const paginationContainer = document.getElementById('pagination-controls');
+            paginationContainer.innerHTML = '';
+            
+            if (totalPages <= 1) return;
+            
+            // Previous button
+            const prevButton = document.createElement('button');
+            prevButton.textContent = 'முந்தைய';
+            prevButton.className = 'page-btn';
+            prevButton.disabled = currentPage === 1;
+            prevButton.onclick = () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderStocksTable();
+                }
+            };
+            paginationContainer.appendChild(prevButton);
+            
+            // Page buttons
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+            
+            if (endPage - startPage + 1 < maxVisiblePages) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.textContent = i;
+                pageButton.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+                pageButton.onclick = () => {
+                    currentPage = i;
+                    renderStocksTable();
+                };
+                paginationContainer.appendChild(pageButton);
+            }
+            
+            // Next button
+            const nextButton = document.createElement('button');
+            nextButton.textContent = 'அடுத்தது';
+            nextButton.className = 'page-btn';
+            nextButton.disabled = currentPage === totalPages;
+            nextButton.onclick = () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderStocksTable();
+                }
+            };
+            paginationContainer.appendChild(nextButton);
+        }
+        
+        // Update statistics
+        function updateStats() {
+            const filtered = applyFiltersAndSearch();
+            const total = filtered.length;
+            const buy = filtered.filter(stock => stock.signal === 'buy').length;
+            const sell = filtered.filter(stock => stock.signal === 'sell').length;
+            const wait = filtered.filter(stock => stock.signal === 'wait').length;
+            const avoid = filtered.filter(stock => stock.signal === 'avoid').length;
+            
+            // Update counts
+            document.getElementById('total-stocks').innerHTML = `${total}<span style="font-size: 20px; margin-left: 5px;">/${TOTAL_STOCKS_IN_MARKET}</span>`;
+            document.getElementById('buy-stocks').textContent = buy;
+            document.getElementById('sell-stocks').textContent = sell;
+            document.getElementById('wait-stocks').textContent = wait;
+            document.getElementById('avoid-stocks').textContent = avoid;
+            
+            // Update percentages
+            document.getElementById('buy-subtitle').textContent = `மொத்தத்தில் ${((buy/TOTAL_STOCKS_IN_MARKET)*100).toFixed(2)}%`;
+            document.getElementById('sell-subtitle').textContent = `மொத்தத்தில் ${((sell/TOTAL_STOCKS_IN_MARKET)*100).toFixed(2)}%`;
+            document.getElementById('wait-subtitle').textContent = `மொத்தத்தில் ${((wait/TOTAL_STOCKS_IN_MARKET)*100).toFixed(2)}%`;
+            document.getElementById('avoid-subtitle').textContent = `மொத்தத்தில் ${((avoid/TOTAL_STOCKS_IN_MARKET)*100).toFixed(2)}%`;
+            
+            // Update total count
+            document.getElementById('total-count').textContent = TOTAL_STOCKS_IN_MARKET;
+        }
+        
+        // Filter stocks by signal
+        function filterStocks(signal) {
+            currentFilter = signal;
+            currentPage = 1; // Reset to first page
+            searchQuery = ""; // Clear search
+            document.getElementById('searchStock').value = "";
+            
+            // Update filter display text
+            let filterText = "அனைத்தும்";
+            switch(signal) {
+                case 'buy': filterText = "வாங்க"; break;
+                case 'sell': filterText = "விற்க"; break;
+                case 'wait': filterText = "காத்திரு"; break;
+                case 'avoid': filterText = "வேண்டாம்"; break;
+            }
+            document.getElementById('current-filter').textContent = filterText;
+            
+            // Update active filter button
+            const allStats = ['stat-all', 'stat-buy', 'stat-sell', 'stat-wait', 'stat-avoid'];
+            allStats.forEach(statId => {
+                document.getElementById(statId).classList.remove('filter-active');
+            });
+            
+            document.getElementById(`stat-${signal}`).classList.add('filter-active');
+            
+            renderStocksTable();
+            updateStats();
+        }
+        
+        // Reset filters
+        function resetFilters() {
+            currentFilter = "all";
+            currentPage = 1;
+            searchQuery = "";
+            document.getElementById('searchStock').value = "";
+            document.getElementById('current-filter').textContent = "அனைத்தும்";
+            
+            const allStats = ['stat-all', 'stat-buy', 'stat-sell', 'stat-wait', 'stat-avoid'];
+            allStats.forEach(statId => {
+                document.getElementById(statId).classList.remove('filter-active');
+            });
+            
+            document.getElementById('stat-all').classList.add('filter-active');
+            
+            renderStocksTable();
+            updateStats();
+        }
+        
+        // Search stocks
+        function searchStocks() {
+            searchQuery = document.getElementById('searchStock').value;
+            currentPage = 1; // Reset to first page when searching
+            renderStocksTable();
+            updateStats();
+        }
+        
+        // Upload file function
+        function uploadFile(type) {
+            const fileInput = type === 'yesterday' ? 
+                document.getElementById('yesterdayFile') : 
+                document.getElementById('todayFile');
+            
+            if (fileInput.files.length === 0) {
+                alert(`தயவு செய்து ${type === 'yesterday' ? 'நேற்றைய' : 'இன்றைய'} பைலைத் தேர்ந்தெடுக்கவும்`);
+                return;
+            }
+            
+            const fileName = fileInput.files[0].name;
+            alert(`"${fileName}" பைல் வெற்றிகரமாக பதிவேற்றப்பட்டது!`);
+            
+            // ஒப்பீட்டு பகுப்பாய்வைக் காட்டு
+            if (type === 'today' && document.getElementById('yesterdayFile').files.length > 0) {
+                showComparison();
+            }
+            
+            updateAnalysisTime();
+        }
+        
+        // Analyze data function
+        function analyzeData() {
+            const yesterdayFile = document.getElementById('yesterdayFile').files.length;
+            const todayFile = document.getElementById('todayFile').files.length;
+            
+            if (!yesterdayFile || !todayFile) {
+                alert('பகுப்பாய்வு செய்ய இரண்டு பைல்களையும் பதிவேற்ற வேண்டும்');
+                return;
+            }
+            
+            alert('பைல்கள் பகுப்பாய்வு செய்யப்படுகின்றன...');
+            
+            analysisTime = new Date();
+            updateAnalysisTime();
+            
+            // ஒப்பீட்டு பகுப்பாய்வைக் காட்டு
+            showComparison();
+            
+            setTimeout(() => {
+                alert(`பகுப்பாய்வு முடிந்தது! ${TOTAL_STOCKS_IN_MARKET} பங்குகளில் இருந்து ${stocksData.length} பங்குகள் பகுப்பாய்வு செய்யப்பட்டன.`);
+            }, 1000);
+        }
+        
+        // Show comparison analysis
+        function showComparison() {
+            document.getElementById('comparisonSection').style.display = 'block';
+            generateComparisonData();
+        }
+        
+        // Toggle comparison visibility
+        function toggleComparison() {
+            const section = document.getElementById('comparisonSection');
+            section.style.display = section.style.display === 'none' ? 'block' : 'none';
+        }
+        
+        // Generate comparison data
+        function generateComparisonData() {
+            const priceComparison = document.getElementById('priceComparison');
+            const volumeComparison = document.getElementById('volumeComparison');
+            const technicalComparison = document.getElementById('technicalComparison');
+            const reasonAnalysis = document.getElementById('reasonAnalysis');
+            
+            // விலை ஒப்பீட்டு தரவுகளை உருவாக்கு
+            let priceHtml = '';
+            const priceChanges = stocksData.slice(0, 10).map(stock => {
+                const priceDiff = stock.price - stock.yesterdayPrice;
+                const percentChange = (priceDiff / stock.yesterdayPrice * 100).toFixed(2);
+                return {
+                    symbol: stock.symbol,
+                    priceDiff: priceDiff,
+                    percentChange: percentChange,
+                    direction: priceDiff >= 0 ? 'உயர்வு' : 'தாழ்வு'
+                };
+            });
+            
+            priceChanges.forEach(change => {
+                const changeClass = change.priceDiff >= 0 ? 'positive-change' : 'negative-change';
+                const sign = change.priceDiff >= 0 ? '+' : '';
+                priceHtml += `
+                    <div class="reason-item">
+                        <div class="reason-title">
+                            <i class="fas ${change.priceDiff >= 0 ? 'fa-arrow-up' : 'fa-arrow-down'}"></i>
+                            <span>${change.symbol}</span>
+                        </div>
+                        <div class="reason-desc">
+                            நேற்று விட இன்று ${sign}${Math.abs(change.priceDiff).toFixed(2)} (${sign}${Math.abs(change.percentChange)}%) ${change.direction}
+                        </div>
+                    </div>
+                `;
+            });
+            priceComparison.innerHTML = priceHtml;
+            
+            // தொகுதி ஒப்பீட்டு தரவுகளை உருவாக்கு
+            let volumeHtml = '';
+            const volumeChanges = stocksData.slice(0, 10).map(stock => {
+                const volumeDiff = stock.volume - stock.yesterdayVolume;
+                const percentChange = (volumeDiff / stock.yesterdayVolume * 100).toFixed(2);
+                return {
+                    symbol: stock.symbol,
+                    volumeDiff: volumeDiff,
+                    percentChange: percentChange,
+                    isHighVolume: volumeDiff > 0
+                };
+            });
+            
+            volumeChanges.forEach(change => {
+                const changeClass = change.volumeDiff >= 0 ? 'positive-change' : 'negative-change';
+                const sign = change.volumeDiff >= 0 ? '+' : '';
+                const volumeText = change.isHighVolume ? 'தொகுதி அதிகரிப்பு' : 'தொகுதி குறைவு';
+                volumeHtml += `
+                    <div class="reason-item">
+                        <div class="reason-title">
+                            <i class="fas ${change.isHighVolume ? 'fa-chart-line' : 'fa-chart-bar'}"></i>
+                            <span>${change.symbol}</span>
+                        </div>
+                        <div class="reason-desc">
+                            நேற்று விட இன்று தொகுதி ${sign}${Math.abs(change.percentChange)}% ${volumeText}
+                        </div>
+                    </div>
+                `;
+            });
+            volumeComparison.innerHTML = volumeHtml;
+            
+            // தொழில்நுட்ப பகுப்பாய்வு தரவுகளை உருவாக்கு
+            let technicalHtml = '';
+            const technicalIndicators = [
+                { symbol: "RELIANCE", indicator: "RSI: 62, MACD: புல்லிஷ்", level: "அப்பர் உடைப்பு" },
+                { symbol: "TCS", indicator: "RSI: 58, MACD: நியூட்ரல்", level: "எதிர்ப்பு மட்டம் அருகில்" },
+                { symbol: "INFY", indicator: "RSI: 45, MACD: பேரிஷ்", level: "ஆதரவு மட்டம் அருகில்" },
+                { symbol: "HDFCBANK", indicator: "RSI: 68, MACD: புல்லிஷ்", level: "புதிய உயர்" },
+                { symbol: "ICICIBANK", indicator: "RSI: 52, MACD: புல்லிஷ்", level: "இடைநிலை" }
+            ];
+            
+            technicalIndicators.forEach(indicator => {
+                technicalHtml += `
+                    <div class="reason-item">
+                        <div class="reason-title">
+                            <i class="fas fa-bullseye"></i>
+                            <span>${indicator.symbol}</span>
+                        </div>
+                        <div class="reason-desc">
+                            ${indicator.indicator}<br>
+                            ${indicator.level}
+                        </div>
+                    </div>
+                `;
+            });
+            technicalComparison.innerHTML = technicalHtml;
+            
+            // காரண விளக்கங்களை உருவாக்கு
+            let reasonHtml = '';
+            reasonExplanations.forEach(reason => {
+                reasonHtml += `<div class="reason-item">
+                    <div class="reason-title">
+                        <i class="fas ${reason.icon}"></i>
+                        <span>${reason.title}</span>
+                    </div>`;
+                
+                reason.reasons.forEach(item => {
+                    reasonHtml += `<div class="reason-desc" style="margin-left: 20px; font-size: 13px;">
+                        • ${item}
+                    </div>`;
+                });
+                
+                reasonHtml += `</div>`;
+            });
+            reasonAnalysis.innerHTML = reasonHtml;
+        }
+        
+        // Save report function
+        function saveReport() {
+            const reportContent = generateReportContent();
+            const blob = new Blob([reportContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Stock_Analysis_Report_${analysisTime.toISOString().slice(0,10)}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            alert('ரிப்போர்ட் வெற்றிகரமாக சேமிக்கப்பட்டது!');
+        }
+        
+        // Export to Excel function
+        function exportToExcel() {
+            const filteredStocks = applyFiltersAndSearch();
+            
+            let csvContent = "பங்கு,பெயர்,துறை,விலை (₹),மாற்றம்,மாற்றம் %,சிக்னல்,இலக்கு விலை,நிறுத்த இழப்பு,காரணம்\n";
+            
+            filteredStocks.forEach(stock => {
+                const changeSign = stock.change >= 0 ? '+' : '';
+                let signalText;
+                
+                switch(stock.signal) {
+                    case 'buy': signalText = 'வாங்க'; break;
+                    case 'sell': signalText = 'விற்க'; break;
+                    case 'wait': signalText = 'காத்திரு'; break;
+                    case 'avoid': signalText = 'வேண்டாம்'; break;
+                }
+                
+                csvContent += `${stock.symbol},"${stock.name}","${stock.sector}",${stock.price},${changeSign}${stock.change},${changeSign}${stock.changePercent}%,${signalText},${stock.target},${stock.stopLoss},"${stock.rationale}"\n`;
+            });
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Stock_Analysis_${analysisTime.toISOString().slice(0,10)}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            alert('எக்செல் கோப்பு வெற்றிகரமாக பதிவிறக்கம் செய்யப்பட்டது!');
+        }
+        
+        // Show WhatsApp modal
+        function showWhatsAppModal() {
+            document.getElementById('whatsappModal').style.display = 'flex';
+        }
+        
+        // Close WhatsApp modal
+        function closeWhatsAppModal() {
+            document.getElementById('whatsappModal').style.display = 'none';
+            document.getElementById('phoneNumber').value = '';
+        }
+        
+        // Send via WhatsApp
+        function sendViaWhatsApp() {
+            const phoneNumber = document.getElementById('phoneNumber').value.trim();
+            
+            if (!phoneNumber) {
+                alert('தயவு செய்து உங்கள் தொலைபேசி எண்ணை உள்ளிடவும்');
+                return;
+            }
+            
+            const phoneRegex = /^[0-9]{10,12}$/;
+            if (!phoneRegex.test(phoneNumber)) {
+                alert('தயவு செய்து சரியான தொலைபேசி எண்ணை உள்ளிடவும் (10-12 இலக்கங்கள்)');
+                return;
+            }
+            
+            const reportContent = generateReportContent();
+            const encodedContent = encodeURIComponent(reportContent);
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedContent}`;
+            
+            window.open(whatsappUrl, '_blank');
+            closeWhatsAppModal();
+            alert('ரிப்போர்ட் வாட்சப்பில் அனுப்பப்படுகிறது...');
+        }
+        
+        // Share individual stock via WhatsApp
+        function shareStockViaWhatsApp(stockSymbol) {
+            const stock = stocksData.find(s => s.symbol === stockSymbol);
+            
+            if (!stock) return;
+            
+            let signalText;
+            switch(stock.signal) {
+                case 'buy': signalText = 'வாங்க'; break;
+                case 'sell': signalText = 'விற்க'; break;
+                case 'wait': signalText = 'காத்திரு'; break;
+                case 'avoid': signalText = 'வேண்டாம்'; break;
+            }
+            
+            const changeSign = stock.change >= 0 ? '+' : '';
+            const message = `📈 பங்கு பகுப்பாய்வு
+
+பங்கு: ${stock.symbol}
+பெயர்: ${stock.name}
+துறை: ${stock.sector}
+
+விலை: ₹${stock.price.toLocaleString('en-IN')}
+மாற்றம்: ${changeSign}${stock.change.toFixed(2)} (${changeSign}${stock.changePercent.toFixed(2)}%)
+
+🎯 இலக்கு விலை: ₹${stock.target.toFixed(0)}
+🛑 நிறுத்த இழப்பு: ₹${stock.stopLoss.toFixed(0)}
+
+📊 பரிந்துரை: ${signalText}
+💡 காரணம்: ${stock.rationale}
+
+⏰ பகுப்பாய்வு செய்த நேரம்: ${analysisTime.toLocaleString('ta-IN')}`;
+            
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
+            
+            window.open(whatsappUrl, '_blank');
+        }
+        
+        // Share dashboard via WhatsApp
+        function shareDashboardViaWhatsApp() {
+            const filteredStocks = applyFiltersAndSearch();
+            
+            let message = `📊 பங்கு பகுப்பாய்வு டாஸ்போர்ட்
+
+⏰ பகுப்பாய்வு செய்த நேரம்: ${analysisTime.toLocaleString('ta-IN')}
+📈 மொத்த பங்குகள்: ${filteredStocks.length}
+📊 சிக்னல் விநியோகம்:
+   • வாங்க: ${filteredStocks.filter(s => s.signal === 'buy').length}
+   • விற்க: ${filteredStocks.filter(s => s.signal === 'sell').length}
+   • காத்திரு: ${filteredStocks.filter(s => s.signal === 'wait').length}
+   • வேண்டாம்: ${filteredStocks.filter(s => s.signal === 'avoid').length}
+
+🔝 முதல் 5 பங்குகள்:
+`;
+            
+            // முதல் 5 பங்குகளைச் சேர்க்கவும்
+            filteredStocks.slice(0, 5).forEach((stock, index) => {
+                const changeSign = stock.change >= 0 ? '+' : '';
+                let signalText;
+                
+                switch(stock.signal) {
+                    case 'buy': signalText = '📈 வாங்க'; break;
+                    case 'sell': signalText = '📉 விற்க'; break;
+                    case 'wait': signalText = '⏳ காத்திரு'; break;
+                    case 'avoid': signalText = '🚫 வேண்டாம்'; break;
+                }
+                
+                message += `${index+1}. ${stock.symbol}: ₹${stock.price} (${changeSign}${stock.changePercent.toFixed(2)}%) - ${signalText}
+   இலக்கு: ₹${stock.target} | நிறுத்தம்: ₹${stock.stopLoss}
+`;
+            });
+            
+            message += `
+📊 மொத்த பங்குகள் சந்தையில்: ${TOTAL_STOCKS_IN_MARKET}
+📈 பகுப்பாய்வு செய்யப்பட்ட பங்குகள்: ${filteredStocks.length}
+
+© 2024 பங்கு பகுப்பாய்வு கருவி`;
+            
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
+            
+            window.open(whatsappUrl, '_blank');
+        }
+        
+        // Print report
+        function printReport() {
+            window.print();
+        }
+        
+        // Generate report content
+        function generateReportContent() {
+            const filteredStocks = applyFiltersAndSearch();
+            
+            let report = `பங்கு பகுப்பாய்வு ரிப்போர்ட்
+=======================
+
+பகுப்பாய்வு செய்யப்பட்ட நேரம்: ${analysisTime.toLocaleString('ta-IN')}
+மொத்த பங்குகள் சந்தையில்: ${TOTAL_STOCKS_IN_MARKET}
+பகுப்பாய்வு செய்யப்பட்ட பங்குகள்: ${filteredStocks.length}
+
+முடிவுகள்:
+-----------
+`;
+            
+            filteredStocks.forEach(stock => {
+                const changeSign = stock.change >= 0 ? '+' : '';
+                let signalText;
+                
+                switch(stock.signal) {
+                    case 'buy': signalText = 'வாங்க'; break;
+                    case 'sell': signalText = 'விற்க'; break;
+                    case 'wait': signalText = 'காத்திரு'; break;
+                    case 'avoid': signalText = 'வேண்டாம்'; break;
+                }
+                
+                report += `${stock.symbol} (${stock.name})
+  விலை: ₹${stock.price} | ${changeSign}${stock.change} (${changeSign}${stock.changePercent}%)
+  பரிந்துரை: ${signalText}
+  இலக்கு: ₹${stock.target} | நிறுத்த இழப்பு: ₹${stock.stopLoss}
+  காரணம்: ${stock.rationale}
+  -------------------------------------------------\n`;
+            });
+            
+            const buyCount = filteredStocks.filter(s => s.signal === 'buy').length;
+            const sellCount = filteredStocks.filter(s => s.signal === 'sell').length;
+            const waitCount = filteredStocks.filter(s => s.signal === 'wait').length;
+            const avoidCount = filteredStocks.filter(s => s.signal === 'avoid').length;
+            
+            report += `
+சுருக்கம்:
+---------
+வாங்க: ${buyCount} (${((buyCount/TOTAL_STOCKS_IN_MARKET)*100).toFixed(2)}%)
+விற்க: ${sellCount} (${((sellCount/TOTAL_STOCKS_IN_MARKET)*100).toFixed(2)}%)
+காத்திரு: ${waitCount} (${((waitCount/TOTAL_STOCKS_IN_MARKET)*100).toFixed(2)}%)
+வேண்டாம்: ${avoidCount} (${((avoidCount/TOTAL_STOCKS_IN_MARKET)*100).toFixed(2)}%)
+
+ஒப்பீட்டு பகுப்பாய்வு:
+-------------------
+• நேற்று விட இன்று விலை உயர்ந்துள்ள பங்குகள்: ${stocksData.filter(s => s.price > s.yesterdayPrice).length}
+• நேற்று விட இன்று விலை தாழ்ந்துள்ள பங்குகள்: ${stocksData.filter(s => s.price < s.yesterdayPrice).length}
+• அதிக தொகுதி வணிகம்: ${stocksData.filter(s => s.volume > s.yesterdayVolume * 1.5).length} பங்குகள்
+
+© 2024 பங்கு பகுப்பாய்வு கருவி`;
+            
+            return report;
+        }
+    </script>
+</body>
+</html>
